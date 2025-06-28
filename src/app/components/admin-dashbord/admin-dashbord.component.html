@@ -1,1 +1,157 @@
-<p>admin-dashbord works!</p>
+<div class="p-8 bg-blue-50 min-h-screen font-sans">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-blue-900">Internship Management Admin Panel</h1>
+    <p class="text-lg text-blue-700 mt-2">Manage users and posts efficiently</p>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="mb-6 border-b border-blue-200">
+    <ul class="flex flex-wrap -mb-px text-blue-800 font-medium">
+      <li class="mr-2">
+        <button
+          class="px-5 py-3 border-b-2 rounded-t-lg hover:text-blue-600 hover:border-blue-300 transition-all"
+          [ngClass]="{
+            'text-blue-700 border-blue-700 bg-white': activeTab === 'users',
+            'text-gray-500 border-transparent': activeTab !== 'users'
+          }"
+          (click)="setActiveTab('users')">
+          Users Management
+        </button>
+      </li>
+      <li class="mr-2">
+        <button
+          class="px-5 py-3 border-b-2 rounded-t-lg hover:text-blue-600 hover:border-blue-300 transition-all"
+          [ngClass]="{
+            'text-blue-700 border-blue-700 bg-white': activeTab === 'posts',
+            'text-gray-500 border-transparent': activeTab !== 'posts'
+          }"
+          (click)="setActiveTab('posts')">
+          Posts Management
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Tab Content -->
+  <div>
+    <!-- Users Tab -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-10" *ngIf="activeTab === 'users'">
+      <div class="bg-blue-600 px-6 py-4 flex justify-between items-center">
+        <h2 class="text-2xl font-semibold text-white">All Users</h2>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-800">
+          <thead class="text-xs uppercase bg-blue-100 text-blue-700">
+            <tr>
+              <th class="px-6 py-3">User ID</th>
+              <th class="px-6 py-3">Username</th>
+              <th class="px-6 py-3">Role</th>
+              <th class="px-6 py-3 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of user" class="bg-white border-b hover:bg-blue-50">
+              <td class="px-6 py-4 font-medium text-blue-900">{{ user.id }}</td>
+              <td class="px-6 py-4">{{ user.username }}</td>
+              <td class="px-6 py-4">
+                <span
+                  [ngClass]="{
+                    'bg-blue-100 text-blue-800': user.role === 'admin',
+                    'bg-green-100 text-green-800': user.role === 'student',
+                    'bg-purple-100 text-purple-800': user.role === 'mentor'
+                  }"
+                  class="text-xs font-semibold px-3 py-1 rounded-full shadow-sm capitalize">
+                  {{ user.role }}
+                </span>
+              </td>
+              <td class="px-6 py-4 flex justify-center space-x-2">
+                <!-- Delete Button -->
+                <button
+                  class="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-100 transition"
+                  (click)="deleteUser(user.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="px-6 py-4 bg-gray-100 border-t flex justify-between items-center">
+        <div class="text-sm text-gray-600">
+          Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">100</span> users
+        </div>
+        <div class="flex space-x-2">
+          <button class="px-3 py-1 border rounded-md text-gray-600 hover:bg-blue-100">Previous</button>
+          <button class="px-3 py-1 border rounded-md bg-blue-600 text-white">1</button>
+          <button class="px-3 py-1 border rounded-md hover:bg-blue-100">2</button>
+          <button class="px-3 py-1 border rounded-md hover:bg-blue-100">3</button>
+          <button class="px-3 py-1 border rounded-md text-gray-600 hover:bg-blue-100">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Posts Tab -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden" *ngIf="activeTab === 'posts'">
+      <div class="bg-blue-600 px-6 py-4 flex justify-between items-center">
+        <h2 class="text-2xl font-semibold text-white">All Posts</h2>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-800">
+          <thead class="text-xs uppercase bg-blue-100 text-blue-700">
+            <tr>
+              <th class="px-6 py-3">Post ID</th>
+              <th class="px-6 py-3">Title</th>
+              <th class="px-6 py-3">Description</th>
+              <th class="px-6 py-3">Location</th>
+              <th class="px-6 py-3 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let post of posts" class="bg-white border-b hover:bg-blue-50">
+              <td class="px-6 py-4 font-medium text-blue-900">{{ post.id }}</td>
+              <td class="px-6 py-4 font-medium">{{ post.title }}</td>
+              <td class="px-6 py-4 text-gray-600 line-clamp-2">{{ post.description }}</td>
+              <td class="px-6 py-4">
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-full">
+                  {{ post.location }}
+                </span>
+              </td>
+              <td class="px-6 py-4 flex justify-center space-x-2">
+                <button
+                  class="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-100 transition"
+                  (click)="deletePost(post.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="px-6 py-4 bg-gray-100 border-t flex justify-between items-center">
+        <div class="text-sm text-gray-600">
+          Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">50</span> posts
+        </div>
+        <div class="flex space-x-2">
+          <button class="px-3 py-1 border rounded-md text-gray-600 hover:bg-blue-100">Previous</button>
+          <button class="px-3 py-1 border rounded-md bg-blue-600 text-white">1</button>
+          <button class="px-3 py-1 border rounded-md hover:bg-blue-100">2</button>
+          <button class="px-3 py-1 border rounded-md hover:bg-blue-100">3</button>
+          <button class="px-3 py-1 border rounded-md text-gray-600 hover:bg-blue-100">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
