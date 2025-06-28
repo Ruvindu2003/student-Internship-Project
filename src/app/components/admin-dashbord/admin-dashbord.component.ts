@@ -47,17 +47,34 @@ export class AdminDashbordComponent {
     }
 
     deleteUser(userId: number) {
-  // Implement your user deletion logic here
+  this.apiService.DeleteUser(userId).subscribe({
+    next: () => {
+      this.getAllUser();
+    },
+    error: (error) => {
+      console.error('Error deleting user:', error);
+    }
+  });
+
   console.log('Deleting user with ID:', userId);
   // Example: this.userService.deleteUser(userId).subscribe(...);
 }
 
 deletePost(postId: number) {
-  // Implement your post deletion logic here
+  this.apiService.DeletePost(postId).subscribe({
+    next: () => {
+      this.getAllPosts();
+    },
+    error: (error) => {
+      console.error('Error deleting post:', error);
+    }
+  });
+
+  
   console.log('Deleting post with ID:', postId);
-  // Example: this.postService.deletePost(postId).subscribe(...);
+
 }
-activeTab: string = 'users'; // Default active tab
+activeTab: string = 'users'; 
 
 setActiveTab(tab: string) {
   this.activeTab = tab;

@@ -26,6 +26,15 @@ return this.http.get(`${this.baseUrl}/admin/users`);
     return this.http.get(`${this.baseUrl}/admin/posts`);
   } 
 
+  DeleteUser(userId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/admin/user/${userId}`);
+  }
+
+  DeletePost(postId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/admin/post/${postId}`);
+  }
+
+
    
 
 
