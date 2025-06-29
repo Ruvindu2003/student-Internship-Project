@@ -5,6 +5,7 @@ import { StudentDashboardComponent } from './components/student-dashboard/studen
 import { CompanyDashbordComponent } from './components/company-dashbord/company-dashbord.component';
 import { AdminDashbordComponent } from './components/admin-dashbord/admin-dashbord.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 export const routes: Routes = [
     {
@@ -34,5 +35,10 @@ export const routes: Routes = [
     {
         path: "dashboard",
         component: DashboardComponent
+    },
+
+    {
+        path:"home",
+        component:HomePageComponent
     }
 ];

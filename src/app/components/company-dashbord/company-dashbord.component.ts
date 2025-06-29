@@ -42,7 +42,7 @@ export class CompanyDashbordComponent {
 
   loadPosts() {
     this.loading = true;
-    this.apiService.getAllPost().subscribe({
+    this.apiService.getAllPost(this.currentUser.id).subscribe({
       next: (posts) => {
         this.posts = posts;
         this.loading = false;

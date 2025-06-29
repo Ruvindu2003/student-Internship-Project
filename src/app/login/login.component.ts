@@ -12,14 +12,14 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  username=''
-  password=''
-  loading=false
-  error='';
+  username = '';
+  password = '';
+  loading = false;
+  error = '';
 
-  constructor(private apiservice:ApiService,private authservice:AuthService,private router:Router){
-  }
-     onLogin() {
+  constructor(private apiService: ApiService,private authService: AuthService,private router: Router) {}
+
+  onLogin() {
     if (!this.username || !this.password) {
       this.error = 'Please fill in all fields';
       return;
@@ -28,7 +28,7 @@ export class LoginComponent {
     this.loading = true;
     this.error = '';
 
-    this.apiservice.login({ username: this.username, password: this.password })
+    this.apiService.login({ username: this.username, password: this.password })
       .subscribe({
         next: (response) => {
 
@@ -41,7 +41,7 @@ export class LoginComponent {
           console.log('Login successful:', user);
           
           
-          this.authservice.setCurrentUser(user);
+          this.authService.setCurrentUser(user);
           
           const role = user.role;
           if (role === 'STUDENT') {
@@ -80,8 +80,4 @@ export class LoginComponent {
   goToRegister() {
     this.router.navigate(['/register']);
   }
-
-
-  
-
 }

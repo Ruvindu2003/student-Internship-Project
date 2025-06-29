@@ -43,9 +43,9 @@ return this.http.get(`${this.baseUrl}/admin/users`);
     return this.http.post<InternshipPost>(`${this.baseUrl}/company/posts`, request, { params });
   }
 
-  getAllPost():Observable<any> {
-    return this.http.get(`${this.baseUrl}/company/posts`);
-
+  getAllPost(userId: number):Observable<any> {
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.get(`${this.baseUrl}/company/posts`, { params });
   }
 
   searchPosts(keyword: string): Observable<InternshipPost[]> {

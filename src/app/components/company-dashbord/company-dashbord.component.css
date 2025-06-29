@@ -1,0 +1,258 @@
+/* Base Styles */
+.min-h-screen {
+  min-height: 100vh;
+  background-color: #f8fafc; /* Very light blue background */
+}
+
+/* Header Styles */
+header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 119, 182, 0.08);
+  border-bottom: 1px solid #e0f2fe;
+}
+
+header h1 {
+  color: #0369a1; /* Dark blue */
+  font-weight: 700;
+}
+
+/* Button Styles */
+button {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Primary Blue Button */
+.bg-blue-500 {
+  background-color: #0ea5e9; /* Bright blue */
+}
+
+.bg-blue-600:hover {
+  background-color: #0284c7; /* Darker blue */
+}
+
+/* Secondary Buttons */
+.bg-gray-500 {
+  background-color: #e2e8f0; /* Light gray */
+  color: #475569; /* Dark gray text */
+}
+
+.bg-gray-600:hover {
+  background-color: #cbd5e1; /* Medium gray */
+}
+
+/* Success/Danger Buttons (keep minimal) */
+.bg-green-500 {
+  background-color: #0ea5e9; /* Using blue instead of green */
+}
+
+.bg-red-500 {
+  background-color: #f8fafc; /* Light background */
+  color: #ef4444; /* Red text */
+  border: 1px solid #ef4444;
+}
+
+.bg-red-500:hover {
+  background-color: #fee2e2; /* Light red */
+}
+
+/* Card Styles */
+.bg-white {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 119, 182, 0.05);
+  border: 1px solid #e0f2fe; /* Light blue border */
+}
+
+/* Form Elements */
+input, textarea {
+  border: 1px solid #bae6fd; /* Light blue border */
+  transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+/* Badges & Tags */
+.bg-blue-100 {
+  background-color: #e0f2fe; /* Light blue */
+  color: #0369a1; /* Dark blue */
+}
+
+/* Loading Spinner */
+.animate-spin {
+  border-top-color: #0ea5e9;
+}
+
+/* Messages */
+.bg-green-100 {
+  background-color: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.bg-red-100 {
+  background-color: #fee2e2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+/* Hover Effects */
+.hover\:shadow-md:hover {
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
+}/* ===== Base Styles ===== */
+.min-h-screen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%); /* Soft blue gradient */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ===== Header ===== */
+header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08);
+  border-bottom: 1px solid rgba(224, 242, 254, 0.6);
+}
+
+header h1 {
+  color: #075985;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* ===== Buttons ===== */
+button {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.1);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+}
+
+/* Primary Button (Blue) */
+.bg-blue-500 {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: white;
+  border: none;
+}
+
+.bg-blue-600:hover {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+}
+
+/* Secondary Button (Light Blue) */
+.bg-gray-500 {
+  background: rgba(224, 242, 254, 0.8);
+  color: #075985;
+  border: 1px solid rgba(186, 230, 253, 0.5);
+}
+
+.bg-gray-600:hover {
+  background: rgba(186, 230, 253, 0.8);
+}
+
+/* Danger Button (Red with Blue Accent) */
+.bg-red-500 {
+  background: white;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.bg-red-500:hover {
+  background: #fee2e2;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+}
+
+/* ===== Cards & Forms ===== */
+.bg-white {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 6px rgba(2, 132, 199, 0.05),
+    0 1px 2px rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(186, 230, 253, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bg-white:hover {
+  box-shadow: 
+    0 8px 16px rgba(2, 132, 199, 0.1),
+    0 2px 4px rgba(2, 132, 199, 0.08);
+}
+
+/* Input Fields */
+input, textarea {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(186, 230, 253, 0.8);
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: #0ea5e9;
+  box-shadow: 
+    0 0 0 3px rgba(14, 165, 233, 0.15),
+    inset 0 1px 2px rgba(14, 165, 233, 0.1);
+}
+
+/* ===== Badges & Tags ===== */
+.bg-blue-100 {
+  background: rgba(186, 230, 253, 0.5);
+  color: #0369a1;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-weight: 500;
+}
+
+/* ===== Loading Spinner ===== */
+.animate-spin {
+  border-top-color: #0ea5e9;
+  border-left-color: rgba(14, 165, 233, 0.2);
+  border-width: 3px;
+}
+
+/* ===== Messages (Alerts) ===== */
+.bg-green-100 {
+  background: rgba(209, 250, 229, 0.8);
+  border: 1px solid rgba(110, 231, 183, 0.5);
+  color: #065f46;
+  backdrop-filter: blur(4px);
+}
+
+.bg-red-100 {
+  background: rgba(254, 226, 226, 0.8);
+  border: 1px solid rgba(252, 165, 165, 0.5);
+  color: #b91c1c;
+  backdrop-filter: blur(4px);
+}
+
+/* ===== Hover Effects ===== */
+.hover\:shadow-md:hover {
+  box-shadow: 
+    0 8px 20px rgba(2, 132, 199, 0.12),
+    0 2px 6px rgba(2, 132, 199, 0.1);
+}
+
+/* ===== Post Cards ===== */
+.border-gray-200 {
+  border-color: rgba(186, 230, 253, 0.4);
+  transition: all 0.3s ease;
+}
+
+.border-gray-200:hover {
+  border-color: rgba(14, 165, 233, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Table/List Items */
+.border-gray-200 {
+  border-color: #e0f2fe; /* Light blue instead of gray */
+}
