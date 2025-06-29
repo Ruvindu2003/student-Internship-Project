@@ -5,6 +5,8 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-company-dashbord',
@@ -37,6 +39,12 @@ export class CompanyDashbordComponent {
   }
 
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+    if (!this.currentUser) {
+      this.error = 'User not found. Please log in again.';
+      this.router.navigate(['/login']);
+      return;
+    }
     this.loadPosts();
   }
 
@@ -81,6 +89,14 @@ export class CompanyDashbordComponent {
     this.loading = true;
     this.error = '';
 
+    if (!this.currentUser || !this.currentUser.id) {
+      this.error = 'User ID not found. Please log in again.';
+      this.loading = false;
+      return;
+    }
+
+    const params = new HttpParams().set('userId', this.currentUser.id.toString());
+
     this.apiService.createPost(this.currentUser.id, this.newPost).subscribe({
       next: (post) => {
         this.posts.unshift(post); 
@@ -89,6 +105,11 @@ export class CompanyDashbordComponent {
         this.showCreateForm = false;
         this.resetForm();
         
+        const user = {
+          id: this.currentUser.id,
+          // ... other properties ...
+        };
+        this.authService.setCurrentUser(user);
 
         setTimeout(() => {
           this.success = '';
@@ -104,5 +125,24 @@ export class CompanyDashbordComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  someMethod() {
+    if (!this.currentUser || !this.currentUser.id) {
+      this.error = 'User not found. Please log in again.';
+      this.router.navigate(['/login']);
+      return;
+    }
+    // Safe to use this.currentUser.id
+  }
+
+  applyForInternship(postId: number) {
+    if (!this.currentUser || !this.currentUser.id) {
+      this.error = 'User not found. Please log in again.';
+      this.router.navigate(['/login']);
+      return;
+    }
+    // Now it's safe to use this.currentUser.id
+    // ...rest of your code...
   }
 }

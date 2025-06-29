@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthResponse, LoginRequest, RegisterRequest, User } from '../model/user.model';
 import { Observable } from 'rxjs';
-import { CreatePostRequest, InternshipPost } from '../model/internship.model';
+import { Application, ApplyRequest, CreatePostRequest, InternshipPost } from '../model/internship.model';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +59,19 @@ return this.http.get(`${this.baseUrl}/admin/users`);
     if (duration) params = params.set('duration', duration);
     return this.http.get<InternshipPost[]>(`${this.baseUrl}/company/posts/filter`, { params });
   }
+
+  //studenApis
+
+  // Student APIs
+  applyForInternship(request: ApplyRequest): Observable<Application> {
+    return this.http.post<Application>(`${this.baseUrl}/student/applications/apply`, request);
+  }
+
+  getStudentApplications(studentId: number): Observable<Application[]> {
+    const params = new HttpParams().set('studentId', studentId.toString());
+    return this.http.get<Application[]>(`${this.baseUrl}/student/applications`, { params });
+  }
+
 
   
 
