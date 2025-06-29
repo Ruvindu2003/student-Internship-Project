@@ -1,55 +1,87 @@
 <div class="login-container">
   <div class="login-card">
     <div class="login-header">
-      <h2>Welcome Back</h2>
-      <p>Please sign in to your account</p>
+      <div class="back-link">
+        <a (click)="goToHome()" class="back-button">
+          <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Home
+        </a>
+      </div>
+      
+      <div class="logo-section">
+        <div class="logo-icon">
+          <span>🎓</span>
+        </div>
+        <h1>Welcome Back</h1>
+        <p>Sign in to your InternConnect account</p>
+      </div>
     </div>
 
     <form (ngSubmit)="onLogin()" class="login-form">
       <div class="form-group">
         <label for="username">Username</label>
-        <input 
-          type="text" 
-          id="username"
-          name="username"
-          [(ngModel)]="username"
-          placeholder="Enter your username"
-          required
-          class="form-control"
-          [class.error]="error && !username"
-        >
+        <div class="input-wrapper">
+          <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+          <input 
+            type="text" 
+            id="username"
+            name="username"
+            [(ngModel)]="username"
+            placeholder="Enter your username"
+            required
+            class="form-input"
+          >
+        </div>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input 
-          type="password" 
-          id="password"
-          name="password"
-          [(ngModel)]="password"
-          placeholder="Enter your password"
-          required
-          class="form-control"
-          [class.error]="error && !password"
-        >
+        <div class="input-wrapper">
+          <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+          </svg>
+          <input 
+            type="password" 
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Enter your password"
+            required
+            class="form-input"
+          >
+        </div>
       </div>
 
-      <div class="error-message" *ngIf="error">
-        {{ error }}
+      <div class="message-container">
+        <div *ngIf="error" class="error-message">
+          <svg class="message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          {{ error }}
+        </div>
       </div>
 
       <button 
         type="submit" 
-        class="login-btn"
+        class="submit-button"
         [disabled]="loading"
       >
-        <span *ngIf="!loading">Log In</span>
+        <span *ngIf="loading" class="loading-spinner"></span>
+        <span *ngIf="!loading">Sign In</span>
         <span *ngIf="loading">Signing In...</span>
       </button>
     </form>
 
     <div class="register-link">
-      <p>Don't have an account? <a (click)="goToRegister()">Register here</a></p>
+      <p>Don't have an account?</p>
+      <button (click)="goToRegister()" class="link-button">
+        Create account here
+      </button>
     </div>
-
+  </div>
+</div>
    

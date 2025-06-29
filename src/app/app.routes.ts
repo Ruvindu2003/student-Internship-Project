@@ -10,7 +10,11 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 export const routes: Routes = [
     {
         path: "",
-        component: LoginComponent
+        component: HomePageComponent
+    },
+    {
+        path: "home",
+        component: HomePageComponent
     },
     {
         path: "login",
@@ -35,9 +39,5 @@ export const routes: Routes = [
     {
         path: "dashboard",
         component: DashboardComponent
-    },
-    {
-        path: "home",
-        component: HomePageComponent
     }
 ];
