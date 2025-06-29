@@ -1,30 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { CreatePostRequest, InternshipPost } from '../../model/internship.model';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-company-dashbord',
-  imports: [CommonModule ,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './company-dashbord.component.html',
   styleUrl: './company-dashbord.component.css'
 })
-export class CompanyDashbordComponent {
-
-  posts: InternshipPost[] = [];
-  currentUser: any;
+export class CompanyDashbordComponent implements OnInit {
+  posts: any[] = [];
+  currentUser: any = null;
   loading = false;
   error = '';
   success = '';
   
   // Form fields for creating new post
   showCreateForm = false;
-  newPost: CreatePostRequest = {
+  newPost = {
     title: '',
     description: '',
     location: '',
@@ -34,14 +30,12 @@ export class CompanyDashbordComponent {
   constructor(
     private apiService: ApiService,
     private authService: AuthService,
-    private router: Router) {
-    this.currentUser = this.authService.getCurrentUser();
-  }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
-    if (!this.currentUser) {
-      this.error = 'User not found. Please log in again.';
+    if (!this.currentUser || !this.authService.isCompany()) {
       this.router.navigate(['/login']);
       return;
     }
@@ -50,12 +44,12 @@ export class CompanyDashbordComponent {
 
   loadPosts() {
     this.loading = true;
-    this.apiService.getAllPost(this.currentUser.id).subscribe({
+    this.apiService.getAllPosts().subscribe({
       next: (posts) => {
         this.posts = posts;
         this.loading = false;
       },
-      error: (error) => {
+      error: () => {
         this.error = 'Failed to load posts';
         this.loading = false;
       }
@@ -86,16 +80,13 @@ export class CompanyDashbordComponent {
       return;
     }
 
-    this.loading = true;
-    this.error = '';
-
-    if (!this.currentUser || !this.currentUser.id) {
+    if (!this.currentUser?.id) {
       this.error = 'User ID not found. Please log in again.';
-      this.loading = false;
       return;
     }
 
-    const params = new HttpParams().set('userId', this.currentUser.id.toString());
+    this.loading = true;
+    this.error = '';
 
     this.apiService.createPost(this.currentUser.id, this.newPost).subscribe({
       next: (post) => {
@@ -105,12 +96,6 @@ export class CompanyDashbordComponent {
         this.showCreateForm = false;
         this.resetForm();
         
-        const user = {
-          id: this.currentUser.id,
-          // ... other properties ...
-        };
-        this.authService.setCurrentUser(user);
-
         setTimeout(() => {
           this.success = '';
         }, 3000);
@@ -125,24 +110,5 @@ export class CompanyDashbordComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
-  }
-
-  someMethod() {
-    if (!this.currentUser || !this.currentUser.id) {
-      this.error = 'User not found. Please log in again.';
-      this.router.navigate(['/login']);
-      return;
-    }
-    // Safe to use this.currentUser.id
-  }
-
-  applyForInternship(postId: number) {
-    if (!this.currentUser || !this.currentUser.id) {
-      this.error = 'User not found. Please log in again.';
-      this.router.navigate(['/login']);
-      return;
-    }
-    // Now it's safe to use this.currentUser.id
-    // ...rest of your code...
   }
 }

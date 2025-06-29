@@ -1,59 +1,136 @@
-# StudentInternshipProject
+# Student Internship Project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+A comprehensive Angular application for managing student internships with role-based access control.
 
-## Development server
+## Project Structure
 
-To start a local development server, run:
+### Models (`src/app/model/`)
+- **`user.model.ts`** - Defines user-related interfaces:
+  - `User` - User entity with id, username, and role
+  - `LoginRequest` - Login credentials
+  - `RegisterRequest` - Registration data
+  - `AuthResponse` - Authentication response
 
-```bash
-ng serve
-```
+- **`internship.model.ts`** - Defines internship-related interfaces:
+  - `InternshipPost` - Internship posting entity
+  - `CreatePostRequest` - Data for creating new posts
+  - `Application` - Student application entity
+  - `ApplyRequest` - Data for applying to internships
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Services (`src/app/services/`)
+- **`auth.service.ts`** - Authentication and user management:
+  - User session management
+  - Role-based access control
+  - Login/logout functionality
+  - User state persistence
 
-## Code scaffolding
+- **`api.service.ts`** - HTTP API communication:
+  - Authentication endpoints
+  - Admin operations (user/post management)
+  - Company operations (post creation/management)
+  - Student operations (application management)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **`auth.guard.ts`** - Route protection:
+  - `AuthGuard` - General authentication guard
+  - `StudentGuard` - Student-specific route protection
+  - `CompanyGuard` - Company-specific route protection
+  - `AdminGuard` - Admin-specific route protection
 
-```bash
-ng generate component component-name
-```
+### Components (`src/app/components/`)
+- **`login/`** - User authentication
+- **`register/`** - User registration
+- **`student-dashboard/`** - Student interface for browsing and applying to internships
+- **`company-dashboard/`** - Company interface for creating and managing internship posts
+- **`admin-dashboard/`** - Admin interface for managing users and posts
+- **`home-page/`** - Landing page for authenticated users
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Key Relationships
 
-```bash
-ng generate --help
-```
+### Authentication Flow
+1. User submits login credentials → `LoginComponent`
+2. `LoginComponent` calls `ApiService.login()`
+3. On success, `AuthService.setCurrentUser()` stores user data
+4. User is redirected based on role using route guards
 
-## Building
+### Role-Based Access Control
+- **Students**: Can browse internships, search, filter, and apply
+- **Companies**: Can create, view, and manage internship posts
+- **Admins**: Can manage all users and posts
 
-To build the project run:
+### Data Flow
+1. **Models** define data structures
+2. **Services** handle business logic and API communication
+3. **Components** use services to display and interact with data
+4. **Guards** protect routes based on authentication and roles
 
-```bash
-ng build
-```
+## Features
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Student Features
+- Browse available internships
+- Search internships by keyword
+- Filter by location and duration
+- Apply to internships with resume link
+- View application status
 
-## Running unit tests
+### Company Features
+- Create new internship posts
+- View all created posts
+- Manage post details
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Admin Features
+- View all users and posts
+- Delete users and posts
+- Monitor system activity
 
-```bash
-ng test
-```
+## Getting Started
 
-## Running end-to-end tests
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-For end-to-end (e2e) testing, run:
+2. Start the development server:
+   ```bash
+   npm start
+   ```
 
-```bash
-ng e2e
-```
+3. Navigate to `http://localhost:4200`
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## API Endpoints
 
-## Additional Resources
+The application expects a backend API running on `http://localhost:8080/api` with the following endpoints:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Authentication
+- `POST /auth/login` - User login
+- `POST /auth/register` - User registration
+
+### Admin
+- `GET /admin/users` - Get all users
+- `GET /admin/posts` - Get all posts
+- `DELETE /admin/user/{id}` - Delete user
+- `DELETE /admin/post/{id}` - Delete post
+
+### Company
+- `POST /company/posts` - Create internship post
+- `GET /company/posts` - Get all posts
+- `GET /company/posts/search` - Search posts
+- `GET /company/posts/filter` - Filter posts
+
+### Student
+- `POST /student/applications/apply` - Apply for internship
+- `GET /student/applications` - Get student applications
+
+## Security Features
+
+- Route guards prevent unauthorized access
+- Role-based component access
+- Secure authentication flow
+- Input validation and sanitization
+
+## Technologies Used
+
+- **Angular 19** - Frontend framework
+- **TypeScript** - Type-safe JavaScript
+- **RxJS** - Reactive programming
+- **Tailwind CSS** - Styling framework
+- **Flowbite** - UI components

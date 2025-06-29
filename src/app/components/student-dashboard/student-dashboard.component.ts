@@ -1,44 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { Application, InternshipPost } from '../../model/internship.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-student-dashboard',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './student-dashboard.component.html',
   styleUrl: './student-dashboard.component.css'
 })
-export class StudentDashboardComponent {
-  internships: InternshipPost[] = [];
-  applications: Application[] = [];
+export class StudentDashboardComponent implements OnInit {
+  internships: any[] = [];
+  applications: any[] = [];
   searchKeyword = '';
   selectedLocation = '';
   selectedDuration = '';
   loading = false;
   error = '';
-  currentUser: any;
+  currentUser: any = null;
 
-
-
-  constructor(private apiservice:ApiService, private authService: AuthService, private route:Router){}
-
-
-
-
-
+  constructor(
+    private apiService: ApiService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+    if (!this.currentUser || !this.authService.isStudent()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    
     this.loadInternships();
     this.loadApplications();
   }
 
   loadInternships() {
     this.loading = true;
-    this.apiservice.getAallPostes().subscribe({
+    this.apiService.getAllPosts().subscribe({
       next: (posts) => {
         this.internships = posts;
         this.loading = false;
@@ -52,7 +54,7 @@ export class StudentDashboardComponent {
 
   loadApplications() {
     if (this.currentUser?.id) {
-      this.apiservice.getStudentApplications(this.currentUser.id).subscribe({
+      this.apiService.getStudentApplications(this.currentUser.id).subscribe({
         next: (applications) => {
           this.applications = applications;
         },
@@ -66,7 +68,7 @@ export class StudentDashboardComponent {
   searchInternships() {
     if (this.searchKeyword.trim()) {
       this.loading = true;
-      this.apiservice.searchPosts(this.searchKeyword).subscribe({
+      this.apiService.searchPosts(this.searchKeyword).subscribe({
         next: (posts) => {
           this.internships = posts;
           this.loading = false;
@@ -83,7 +85,7 @@ export class StudentDashboardComponent {
 
   filterInternships() {
     this.loading = true;
-    this.apiservice.filterPosts(this.selectedLocation, this.selectedDuration).subscribe({
+    this.apiService.filterPosts(this.selectedLocation, this.selectedDuration).subscribe({
       next: (posts) => {
         this.internships = posts;
         this.loading = false;
@@ -96,6 +98,11 @@ export class StudentDashboardComponent {
   }
 
   applyForInternship(postId: number) {
+    if (!this.currentUser) {
+      alert('Please login to apply for internships');
+      return;
+    }
+
     const resumeLink = prompt('Please enter your resume link:');
     if (!resumeLink) return;
 
@@ -105,7 +112,7 @@ export class StudentDashboardComponent {
       resumeLink: resumeLink
     };
 
-    this.apiservice.applyForInternship(request).subscribe({
+    this.apiService.applyForInternship(request).subscribe({
       next: (application) => {
         alert('Application submitted successfully!');
         this.loadApplications();
@@ -132,6 +139,6 @@ export class StudentDashboardComponent {
 
   logout() {
     this.authService.logout();
-    this.route.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 }

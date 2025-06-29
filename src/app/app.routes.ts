@@ -36,9 +36,8 @@ export const routes: Routes = [
         path: "dashboard",
         component: DashboardComponent
     },
-
     {
-        path:"home",
-        component:HomePageComponent
+        path: "home",
+        component: HomePageComponent
     }
 ];

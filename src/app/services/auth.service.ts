@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +10,18 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable(); 
 
   constructor(private http: HttpClient) {
-     const savedUser = localStorage.getItem('currentUser');
+    const savedUser = localStorage.getItem('currentUser');
     if (savedUser) {
       this.currentUserSubject.next(JSON.parse(savedUser));
     }
   }
-   setCurrentUser(user: any) {
+
+  setCurrentUser(user: any) {
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
 
-  getCurrentUser() {
+  getCurrentUser(): any {
     return this.currentUserSubject.value;
   }
 
@@ -37,7 +38,19 @@ export class AuthService {
     const user = this.getCurrentUser();
     return user ? user.role : null;
   }
-   }
+
+  isStudent(): boolean {
+    return this.getUserRole() === 'STUDENT';
+  }
+
+  isCompany(): boolean {
+    return this.getUserRole() === 'COMPANY';
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 'ADMIN';
+  }
+}
 
  
 
